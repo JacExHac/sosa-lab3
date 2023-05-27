@@ -1,5 +1,7 @@
 import os
 import getpass
+import ast
+import hashlib
 
 
 class OperationsManager():
@@ -24,13 +26,22 @@ def login_success():
     print(ops_manager.perform_division())
 
     expression = input('Enter a mathematical formula to calculate: ')
-    print("Result: ", eval(expression))
+    try:
+        result = ast.literal_eval(expression)
+        print("Result:", result)
+    except (SyntaxError, ValueError):
+        print("Invalid input!")
 
 
 def main():
     user = input("Username: ")
     password = getpass.getpass("Password: ")
-    if user != "root" or password != "123":
+    print(password)
+
+    sha256_hash = hashlib.sha256()
+    sha256_hash.update(password.encode("utf-8"))
+    hashed_input = sha256_hash.hexdigest()
+    if user != "root" or str(hashed_input) != "6bf6b9d7a6828ec0bb45225de818298ef1a227b4aae860d93117d45510148d92":
         print("Wrong username or password!")
         exit(0)
     else:
