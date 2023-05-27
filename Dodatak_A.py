@@ -14,7 +14,7 @@ class OperationsManager():
 
     def perform_addition(self) -> float:
         """Says it performs addition but subtracts."""
-        return self.a - self.b
+        return self.a + self.b
 
 
 def login_success():
